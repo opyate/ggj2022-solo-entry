@@ -61,7 +61,10 @@ func _on_swap_key():
 		key_tween.interpolate_property($Key, "modulate:a", 1.0, 0.0, 0.3)
 		key_tween.start()
 		yield(get_tree().create_timer(0.3), "timeout")
-		$Key.queue_free()
+		if not has_node("Key"):
+			g.emit_signal("reload_level")
+		elif $Key:
+			$Key.queue_free()
 	else:
 		var key = key_scene.instance()
 		key.modulate.a = 0.0
@@ -116,6 +119,8 @@ func _physics_process(_delta):
 	_velocity = move_and_slide_with_snap(
 		_velocity, snap_vector, FLOOR_NORMAL, not is_on_platform, 4, 0.9, false
 	)
+	if _velocity.y > 600:
+		_velocity.y = 600
 
 	# When the character’s direction changes, we want to to scale the Sprite accordingly to flip it.
 	# This will make it face left or right depending on the direction you move.
