@@ -18,7 +18,12 @@ var game_rng_seed = "Random Seed" setget set_seed
 
 var current_level = "1"
 
-const LEVELS = ["1", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3", "4", "5", "99"]
+const LEVELS = [
+	"1", "1.1", "1.2", "1.3", 
+	"2", "2.1", "2.2", 
+	"3", "4", "5", "6",
+	"99"
+]
 
 #var ambience_player = AudioStreamPlayer.new()
 #var ambience = "res://scenes/level/assets/ambience.ogg"
@@ -48,4 +53,5 @@ func next_level():
 		current_level = LEVELS[-1]
 	else:
 		current_level = LEVELS[next_idx]
+	print("level = %s" % [current_level])
 	return current_level

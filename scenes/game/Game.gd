@@ -11,11 +11,7 @@ func get_level(ln: String):
 	return "res://scenes/level/%s/Level.tscn" % [ln]
 
 
-func load_level():
-	# debug
-	for _i in range(8):
-		g.next_level()
-		
+func load_level():	
 	var level_scene_file = get_level(g.current_level)
 	if File.new().file_exists(level_scene_file):
 		current_level_scene = load(level_scene_file).instance()
@@ -27,6 +23,9 @@ func load_level():
 
 
 func _ready():
+	# debug
+	for _i in range(8):
+		g.next_level()
 	load_level()
 	
 	#warning-ignore:return_value_discarded
