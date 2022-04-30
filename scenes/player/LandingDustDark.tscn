@@ -25,12 +25,13 @@ angle = -211.8
 angle_random = 0.64
 scale = 1.2
 scale_curve = SubResource( 4 )
+color = Color( 0.317647, 0.0980392, 0, 1 )
 
 [sub_resource type="StreamTexture" id=6]
 flags = 4
 load_path = "res://.import/jumpsplosion2.png-e7f20f62e9d023f9bb0a3bc2e8ec46a4.stex"
 
-[node name="LandingDust" type="Node2D"]
+[node name="LandingDustDark" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="Particles2D" type="Particles2D" parent="."]

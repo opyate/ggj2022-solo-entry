@@ -12,7 +12,8 @@ onready var key_tween = $KeyTween
 onready var screen_size = get_viewport_rect().size
 onready var key_scene = preload("res://scenes/level/Key.tscn")
 onready var jumpsplosion_scene = preload("res://scenes/player/Jumpsplosion.tscn")
-onready var landingdust_scene = preload("res://scenes/player/LandingDust.tscn")
+onready var landingdust_light_scene = preload("res://scenes/player/LandingDustLight.tscn")
+onready var landingdust_dark_scene = preload("res://scenes/player/LandingDustDark.tscn")
 var light_sprite = load("res://scenes/player/assets/light-player.png")
 var dark_sprite = load("res://scenes/player/assets/dark-player.png")
 
@@ -20,12 +21,10 @@ var can_play_audio_footsteps = true
 var can_play_audio_jump = true
 var just_landed = false
 var just_started_falling = false
-var player_color = g.color_dark
 var player_type = "-none-"
 
 func make_dark():
 	$Sprite.texture = dark_sprite
-	player_color = g.color_dark
 	player_type = "dark"
 	set_collision_layer_bit(1, true)
 	set_collision_mask_bit(1, true)
@@ -33,7 +32,6 @@ func make_dark():
 
 func make_light():
 	$Sprite.texture = light_sprite
-	player_color = g.color_light
 	player_type = "light"
 	set_collision_layer_bit(0, true)
 	set_collision_mask_bit(0, true)
@@ -163,9 +161,13 @@ func _physics_process(_delta):
 	if just_landed:
 		just_landed = false
 		just_started_falling = false
-		var landingdust = landingdust_scene.instance()
+		
+		var landingdust
+		if player_type == "dark":
+			landingdust = landingdust_dark_scene.instance()
+		else:
+			landingdust = landingdust_light_scene.instance()
 		landingdust.global_position = position + Vector2(0, 16.0)
-		landingdust.set_color(player_color)
 		get_parent().add_child(landingdust)
 
 
