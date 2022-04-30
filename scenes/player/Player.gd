@@ -12,23 +12,29 @@ onready var key_tween = $KeyTween
 onready var screen_size = get_viewport_rect().size
 onready var key_scene = preload("res://scenes/level/Key.tscn")
 onready var jumpsplosion_scene = preload("res://scenes/player/Jumpsplosion.tscn")
+onready var landingdust_scene = preload("res://scenes/player/LandingDust.tscn")
 var light_sprite = load("res://scenes/player/assets/light-player.png")
 var dark_sprite = load("res://scenes/player/assets/dark-player.png")
-var type
+
 var can_play_audio_footsteps = true
 var can_play_audio_jump = true
-
+var just_landed = false
+var just_started_falling = false
+var player_color = g.color_dark
+var player_type = "-none-"
 
 func make_dark():
 	$Sprite.texture = dark_sprite
-	type = "dark"
+	player_color = g.color_dark
+	player_type = "dark"
 	set_collision_layer_bit(1, true)
 	set_collision_mask_bit(1, true)
 
 
 func make_light():
 	$Sprite.texture = light_sprite
-	type = "white"
+	player_color = g.color_light
+	player_type = "light"
 	set_collision_layer_bit(0, true)
 	set_collision_mask_bit(0, true)
 
@@ -121,6 +127,9 @@ func _physics_process(_delta):
 		_velocity, snap_vector, FLOOR_NORMAL, not is_on_platform, 4, 0.9, false
 	)
 	
+	if _velocity.y > 10:
+		just_started_falling = true
+	
 	# don't fall to fast
 	if _velocity.y > 600:
 		_velocity.y = 600
@@ -146,6 +155,18 @@ func _physics_process(_delta):
 		position.y = 0
 	if position.y < 0:
 		position.y = screen_size.y
+	
+	# detect when the character landed
+	if is_on_floor() and just_started_falling:
+		just_landed = true
+	
+	if just_landed:
+		just_landed = false
+		just_started_falling = false
+		var landingdust = landingdust_scene.instance()
+		landingdust.global_position = position + Vector2(0, 16.0)
+		landingdust.set_color(player_color)
+		get_parent().add_child(landingdust)
 
 
 func get_direction():
@@ -158,6 +179,7 @@ func get_direction():
 
 func _input(event):
 	if event.is_action_pressed("jump" + action_suffix) and can_play_audio_jump:
+		just_started_falling = true
 		can_play_audio_jump = false
 		audio_jump.play()
 		var jumpsplosion = jumpsplosion_scene.instance()

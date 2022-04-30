@@ -15,7 +15,8 @@ signal reload_level
 const TILE_SIZE = 32
 var game_rng := RandomNumberGenerator.new()
 var game_rng_seed = "Random Seed" setget set_seed
-
+const color_light: Color = Color("#1896eb")
+const color_dark: Color = Color("#511900")
 var current_level = "1"
 
 const LEVELS = [
