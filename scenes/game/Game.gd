@@ -8,8 +8,8 @@ var current_level_scene
 
 func _ready():
 	# debug
-	for _i in range(8):
-		g.next_level()
+#	for _i in range(15):
+#		g.next_level()
 	load_level()
 	
 	#warning-ignore:return_value_discarded

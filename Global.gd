@@ -24,19 +24,9 @@ const LEVELS = [
 	"2", "2.1", "2.2", 
 	"3", "4", "5",
 	"6", "6.1",
+	"7", "7.1", "7.2",
 	"99"
 ]
-
-#var ambience_player = AudioStreamPlayer.new()
-#var ambience = "res://scenes/level/assets/ambience.ogg"
-
-func _ready():
-	pass
-#	if File.new().file_exists(ambience):
-#		var sfx = load(ambience) 
-#		sfx.set_loop(true)
-#		ambience_player.stream = sfx
-#		ambience_player.play()
 
 
 func set_seed(_seed) -> void:
@@ -52,7 +42,7 @@ func next_level():
 	var current_idx = LEVELS.find(current_level)
 	var next_idx = current_idx + 1
 	if len(LEVELS) < next_idx + 1:
-		current_level = LEVELS[-1]
+		current_level = LEVELS[0]
 	else:
 		current_level = LEVELS[next_idx]
 	print("level = %s" % [current_level])

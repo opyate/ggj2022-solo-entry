@@ -41,6 +41,11 @@ func found_exit():
 #	print("Exit:found_exit")
 	g.emit_signal("found_exit")
 	audio.play()
+	
+	var s = 10.0
+	tween_grow.interpolate_property(self, "scale", Vector2.ONE, Vector2(s,s), audio.stream.get_length()+0.5)
+	tween_grow.interpolate_property(self, "rotation", 0.0, PI * 2, audio.stream.get_length() + 1)
+	tween_grow.start()
 
 
 func _on_audio_finished():
