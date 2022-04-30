@@ -159,6 +159,8 @@ func _physics_process(_delta):
 		just_landed = true
 	
 	if just_landed:
+		audio_footsteps.play()
+		
 		just_landed = false
 		just_started_falling = false
 		
