@@ -11,6 +11,7 @@ onready var audio_jump = $AudioJump
 onready var key_tween = $KeyTween
 onready var screen_size = get_viewport_rect().size
 onready var key_scene = preload("res://scenes/level/Key.tscn")
+onready var jumpsplosion_scene = preload("res://scenes/player/Jumpsplosion.tscn")
 var light_sprite = load("res://scenes/player/assets/light-player.png")
 var dark_sprite = load("res://scenes/player/assets/dark-player.png")
 var type
@@ -119,6 +120,8 @@ func _physics_process(_delta):
 	_velocity = move_and_slide_with_snap(
 		_velocity, snap_vector, FLOOR_NORMAL, not is_on_platform, 4, 0.9, false
 	)
+	
+	# don't fall to fast
 	if _velocity.y > 600:
 		_velocity.y = 600
 
@@ -157,6 +160,9 @@ func _input(event):
 	if event.is_action_pressed("jump" + action_suffix) and can_play_audio_jump:
 		can_play_audio_jump = false
 		audio_jump.play()
+		var jumpsplosion = jumpsplosion_scene.instance()
+		jumpsplosion.global_position = position + Vector2(0, 8)
+		get_parent().add_child(jumpsplosion)
 
 
 # This function calculates a new velocity whenever you need it.

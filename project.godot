@@ -26,8 +26,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="ggj2022"
+config/name="Dua"
 run/main_scene="res://scenes/game/Game.tscn"
+boot_splash/bg_color=Color( 1, 0.945098, 0.74902, 1 )
 config/icon="res://icon.png"
 
 [autoload]
